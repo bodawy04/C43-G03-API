@@ -14,10 +14,24 @@ public class ProductsController(IServiceManager serviceManager) : ControllerBase
     //    var products = await serviceManager.ProductService.GetAllProductsAsync();
     //    return Ok(products);
     //}
+
+    //[HttpGet]
+    //public async Task<ActionResult<IEnumerable<ProductResponse>>> GetAllProducts(int? brandId, int? typeId, ProductSortingOptions sort)
+    //{
+    //    var products = await serviceManager.ProductService.GetAllProductsAsync(brandId,typeId,sort);
+    //    return Ok(products);
+    //}
+    //[HttpGet]
+    //public async Task<ActionResult<IEnumerable<ProductResponse>>> GetAllProducts([FromQuery]ProductQueryParameters queryParameters)
+    //{
+    //    var products = await serviceManager.ProductService.GetAllProductsAsync(queryParameters);
+    //    return Ok(products);
+    //}
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<ProductResponse>>> GetAllProducts(int? brandId, int? typeId, ProductSortingOptions sort)
+    public async Task<ActionResult<PaginatedResponse<ProductResponse>>> GetAllProducts([FromQuery]ProductQueryParameters queryParameters)
     {
-        var products = await serviceManager.ProductService.GetAllProductsAsync(brandId,typeId,sort);
+        throw new Exception("Test");
+        var products = await serviceManager.ProductService.GetAllProductsAsync(queryParameters);
         return Ok(products);
     }
     [HttpGet("{id}")]
