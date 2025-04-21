@@ -1,4 +1,5 @@
 ﻿using Domain.Exceptions;
+using Domain.Models.Products;
 using Microsoft.Extensions.Options;
 using Services.Specifications;
 

@@ -1,4 +1,5 @@
-﻿using System.Linq.Expressions;
+﻿using Domain.Models.Products;
+using System.Linq.Expressions;
 
 namespace Services.Specifications;
 

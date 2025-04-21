@@ -1,4 +1,6 @@
-﻿namespace Persistence.Data;
+﻿using Domain.Models.Products;
+
+namespace Persistence.Data;
 
 public class StoreDbContext(DbContextOptions options) : DbContext(options)
 {
