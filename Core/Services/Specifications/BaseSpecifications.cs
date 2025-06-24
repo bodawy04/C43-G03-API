@@ -1,7 +1,4 @@
-﻿using Domain.Contracts;
-using System.Linq.Expressions;
-
-namespace Services.Specifications;
+﻿namespace Services.Specifications;
 
 internal abstract class BaseSpecifications<T> : ISpecifications<T> where T : class
 {
