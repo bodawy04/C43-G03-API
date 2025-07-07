@@ -1,6 +1,8 @@
-﻿namespace Persistence.Data;
+﻿using Domain.Models.Products;
 
-public class StoreDbContext(DbContextOptions options) : DbContext(options)
+namespace Persistence.Data;
+
+public class StoreDbContext(DbContextOptions<StoreDbContext> options) : DbContext(options)
 {
     public DbSet<Product> Products { get; set; }
     public DbSet<ProductType> ProductTypes { get; set; }

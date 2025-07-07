@@ -1,6 +1,12 @@
-﻿namespace Persistence;
+﻿using Domain.Models.Identity;
+using Domain.Models.Products;
+using Microsoft.AspNetCore.Identity;
+using Persistence.Identity;
 
-public class DbInitializer(StoreDbContext context) : IDbInitializer
+namespace Persistence;
+
+public class DbInitializer(StoreDbContext context,StoreIdentityDbContext storeIdentityDbContext,
+    UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager): IDbInitializer
 {
     public async Task InitializeAsync()
     {
@@ -56,6 +62,42 @@ public class DbInitializer(StoreDbContext context) : IDbInitializer
         catch (Exception ex)
         {
             Console.WriteLine(ex.Message);
+        }
+    }
+
+    public async Task InitializeIdentityAsync()
+    {
+        ///if ((await storeIdentityDbContext.Database.GetPendingMigrationsAsync()).Any())
+        ///    await storeIdentityDbContext.Database.MigrateAsync();
+
+        if (!roleManager.Roles.Any())
+        {
+            await roleManager.CreateAsync(new IdentityRole("Admin"));
+            await roleManager.CreateAsync(new IdentityRole("SuperAdmin"));
+        }
+        if (!userManager.Users.Any())
+        {
+            var superAdmin = new ApplicationUser
+            {
+                DisplayName="Super Admin",
+                Email="SuperAdmin@gmail.com",
+                UserName="SuperAdmin",
+                PhoneNumber="0123456789"
+            };
+
+            var admin = new ApplicationUser
+            {
+                DisplayName = "Admin",
+                Email = "Admin@gmail.com",
+                UserName = "Admin",
+                PhoneNumber = "0123456789"
+            };
+
+            await userManager.CreateAsync(superAdmin,"Passw0rd");
+            await userManager.CreateAsync(admin, "Passw0rd");
+
+            await userManager.AddToRoleAsync(superAdmin, "SuperAdmin");
+            await userManager.AddToRoleAsync(admin, "Admin");
         }
     }
 }

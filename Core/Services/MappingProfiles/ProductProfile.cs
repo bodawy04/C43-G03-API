@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-
+﻿
 namespace Services.MappingProfiles;
 
 public class ProductProfile : Profile
