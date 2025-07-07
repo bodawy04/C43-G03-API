@@ -14,4 +14,21 @@ public interface IAuthenticationService
     // =>UserResponse(string token, email, displayName)
     Task<UserResponse> RegisterAsync(RegisterRequest registerRequest);
 
+    //[HttpGet]
+    //CheckEmail(string email) => bool
+
+    //TODO
+
+    //[Authorize]
+    //[HttpGet]
+    //GetCurrentUserAddress() => AddressDto
+
+    //[Authorize]
+    //[HttpPut]
+    //UpdateCurrentUserAddress(AddressDto) => AddressDto
+
+    //[Authorize]
+    //[HttpGet]
+    //GetCurrentUser() => UserResponse(string token, string email, string displayName)
+
 }
