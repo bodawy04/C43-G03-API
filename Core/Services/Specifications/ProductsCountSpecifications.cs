@@ -1,8 +1,4 @@
-﻿using Domain.Models.Products;
-using System.ComponentModel;
-using System.Linq.Expressions;
-
-namespace Services.Specifications;
+﻿namespace Services.Specifications;
 
 internal class ProductsCountSpecifications(ProductQueryParameters parameters)
         : BaseSpecifications<Product>(CreateCriteria(parameters))

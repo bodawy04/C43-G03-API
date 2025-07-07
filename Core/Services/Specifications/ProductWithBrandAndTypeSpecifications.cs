@@ -1,7 +1,4 @@
-﻿using Domain.Models.Products;
-using System.Linq.Expressions;
-
-namespace Services.Specifications;
+﻿namespace Services.Specifications;
 
 internal class ProductWithBrandAndTypeSpecifications : BaseSpecifications<Product>
 {

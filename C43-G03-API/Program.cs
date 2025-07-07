@@ -20,10 +20,10 @@ public class Program
 
         // Add services to the container.
         builder.Services.AddControllers();
-        builder.Services.AddApplicationServices();
+        builder.Services.AddApplicationServices(builder.Configuration);
         builder.Services.AddInfrastructureServices(builder.Configuration);
         builder.Services.AddSwaggerServices();
-        builder.Services.AddWebApplicationServices();
+        builder.Services.AddWebApplicationServices(builder.Configuration);
         
         
 
@@ -40,7 +40,8 @@ public class Program
         app.UseStaticFiles();
         app.UseHttpsRedirection();
 
-        //app.UseAuthorization();
+        app.UseAuthorization();
+        app.UseAuthentication();
 
 
         app.MapControllers();

@@ -1,7 +1,4 @@
-﻿using Domain.Exceptions;
-using Shared.DataTransferObjects.Basket;
-
-namespace Services;
+﻿namespace Services;
 
 class BasketService(IBasketRepository basketRepository,IMapper mapper) : IBasketService
 {

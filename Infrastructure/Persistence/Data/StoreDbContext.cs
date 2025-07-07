@@ -2,7 +2,7 @@
 
 namespace Persistence.Data;
 
-public class StoreDbContext(DbContextOptions options) : DbContext(options)
+public class StoreDbContext(DbContextOptions<StoreDbContext> options) : DbContext(options)
 {
     public DbSet<Product> Products { get; set; }
     public DbSet<ProductType> ProductTypes { get; set; }
