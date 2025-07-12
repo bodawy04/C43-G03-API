@@ -1,8 +1,28 @@
-﻿namespace Services;
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace Services;
 
 internal class AuthenticationService(UserManager<ApplicationUser> userManager,
-    IOptions<JWTOptions> options,RoleManager<IdentityRole> roleManager) : IAuthenticationService
+    IOptions<JWTOptions> options, RoleManager<IdentityRole> roleManager, IMapper mapper) : IAuthenticationService
 {
+    public async Task<bool> CheckEmailAsync(string email)
+    => (await userManager.FindByEmailAsync(email)) != null;
+
+    public async Task<AddressDto> GetUserAddressAsync(string email)
+    {
+        var user = await userManager.Users.Include(x => x.Address).FirstOrDefaultAsync(u => u.Email == email)
+            ?? throw new UserNotFoundException(email);
+        if (user.Address is not null) return mapper.Map<AddressDto>(user.Address);
+        throw new AddressNotFoundException(user.UserName);
+    }
+
+    public async Task<UserResponse> GetUserByEmail(string email)
+    {
+        var user = await userManager.FindByEmailAsync(email) ??
+            throw new UserNotFoundException(email);
+        return new UserResponse(email, user.DisplayName, await CreateTokenAsync(user));
+    }
+
     public async Task<UserResponse> LoginAsync(LoginRequest loginRequest)
     {
         //Check if the user with email address exists
@@ -32,9 +52,30 @@ internal class AuthenticationService(UserManager<ApplicationUser> userManager,
 
         throw new BadRequestException(errors);
     }
+
+    public async Task<AddressDto> UpdateUserAddressAsync(AddressDto addressDto, string email)
+    {
+        var user = await userManager.Users.Include(x => x.Address).FirstOrDefaultAsync(u => u.Email == email)
+            ?? throw new UserNotFoundException(email);
+        if (user.Address is not null)
+        {
+            user.Address.FirstName = addressDto.FirstName;
+            user.Address.LastName = addressDto.LastName;
+            user.Address.City = addressDto.City;
+            user.Address.Street = addressDto.Street;
+            user.Address.Country = addressDto.Country;
+        }
+        else
+        {
+            user.Address = mapper.Map<Address>(addressDto);
+        }
+        await userManager.UpdateAsync(user);
+        return mapper.Map<AddressDto>(user.Address);
+    }
+
     private async Task<string> CreateTokenAsync(ApplicationUser user)
     {
-        var jwt=options.Value;
+        var jwt = options.Value;
         var claims = new List<Claim>
         {
             new(ClaimTypes.Email, user.Email!),
