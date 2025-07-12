@@ -16,19 +16,22 @@ public interface IAuthenticationService
 
     //[HttpGet]
     //CheckEmail(string email) => bool
-
+    Task<bool> CheckEmailAsync(string email);
     //TODO
 
     //[Authorize]
     //[HttpGet]
     //GetCurrentUserAddress() => AddressDto
+    Task<AddressDto> GetUserAddressAsync(string email);
+
 
     //[Authorize]
     //[HttpPut]
     //UpdateCurrentUserAddress(AddressDto) => AddressDto
+    Task<AddressDto> UpdateUserAddressAsync(AddressDto addressDto,string email);
 
     //[Authorize]
     //[HttpGet]
     //GetCurrentUser() => UserResponse(string token, string email, string displayName)
-
+    Task<UserResponse> GetUserByEmail(string email);
 }

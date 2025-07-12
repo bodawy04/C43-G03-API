@@ -3,9 +3,8 @@ using ServicesAbstractions;
 using Shared.DataTransferObjects.Basket;
 
 namespace Presentation.Controllers;
-[Route("api/[controller]")]
-[ApiController]
-public class BasketsController(IServiceManager serviceManager):ControllerBase
+
+public class BasketsController(IServiceManager serviceManager):APIController
 {
     // Get Basket by id
     [HttpGet]
